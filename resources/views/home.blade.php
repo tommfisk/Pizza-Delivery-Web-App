@@ -1,14 +1,17 @@
 <?php
     session_start();
 
-    if(!isset($_SESSION['pizzas'])){
-        $_SESSION['pizzas'] = [];
+//  Checks if Session array is set. If it's not, then it gets declared.
+    if(!isset($_SESSION['order'])){
+        $_SESSION['order'] = [];
     }
 ?>
 @extends('layouts.app')
 
 @section('content')
     <h1 style="text-align: center">Menu</h1>
+
+    {{-- Div for list of pizzas where each form is a pizza with respective drop down lists for sizes. --}}
     <div class="card-body">
         <form method="POST" action="{{ route('add_to_order') }}">
             @csrf
@@ -71,5 +74,4 @@
             </div>
         </form>
     </div>
-
 @endsection

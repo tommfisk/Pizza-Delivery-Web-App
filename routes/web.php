@@ -35,5 +35,5 @@ Route::get('/order', [App\Http\Controllers\OrderController::class, 'getOrder'])-
 
 Auth::routes();
 
-Route::post('/order', [App\Http\Controllers\OrderController::class, 'postOrder'])->name('post_order');
+Route::post('/store', [App\Http\Controllers\OrderController::class, 'store'])->name('store');
 
