@@ -1,18 +1,3 @@
-<?php
-    session_start();
-
-    $pizza_groups['small'] = [];
-    $pizza_groups['medium'] = [];
-    $pizza_groups['large'] = [];
-
-    if (!isset($_SESSION['deal'])) {
-        $_SESSION['deal'] = null;
-    }
-
-    if (!isset($_SESSION['via'])) {
-        $_SESSION['via'] = 'delivery';
-    }
-?>
 @extends('layouts.app')
 
 @section('title', 'Secure page')

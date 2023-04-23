@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('order_pizza', function (Blueprint $table) {
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('pizza_id');
-            $table->integer('quantity');
+            $table->string("size");
             $table->timestamps();
 
             $table->foreign('order_id')

@@ -7,7 +7,6 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-{{--    <title>{{ config('app.name', "Tom's Pizza") }}</title>--}}
     <title>Tom's Pizza</title>
 
     <!-- Fonts -->

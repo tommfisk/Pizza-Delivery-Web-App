@@ -1,15 +1,6 @@
 <?php
-    session_start();
 
     $total = 0.00;
-
-    if (!isset($_SESSION['deal'])) {
-        $_SESSION['deal'] = null;
-    }
-
-    if (!isset($_SESSION['via'])) {
-        $_SESSION['via'] = 'delivery';
-    }
 
     if(!$_SESSION['deal'] == null) {
         foreach($deals as $deal_model) {
@@ -40,30 +31,15 @@
                 <th>Pizza</th>
                 <th>Size</th>
                 <th>Price</th>
-                <th>Quantity</th>
             </tr>
 
-            {{-- Takes order session and groups ids by quantity --}}
-            <?php $order_with_quantities = array_count_values($_SESSION['order']) ?>
-
-            {{-- Iterates through each pizza id --}}
-            @foreach($order_with_quantities as $pizza_id => $quantity)
-                {{-- Then iterates through each pizza in the model and compares ids --}}
-                @foreach($pizzas as $pizza)
-                    {{-- If the pizza id in the order matches with a row in the model, it will be output --}}
-                    @if($pizza_id == $pizza->id)
-
-                        <tr>
-                            <td>{{ ucfirst(implode(" ", explode("_", $pizza->pizza_name))) }}</td>
-                            <td>{{ ucfirst($pizza->pizza_size) }}</td>
-                            <td>{{ "£".number_format($pizza->pizza_price * $quantity, 2) }} </td>
-                            <td>{{ $quantity }} </td>
-                        </tr>
-
-                        <?php $total += $pizza->pizza_price * $quantity; ?>
-
-                    @endif
-               @endforeach
+            @foreach($_SESSION['order'] as $pizza)
+                <tr>
+                    <td>{{ $pizza[1] }}</td>
+                    <td>{{ ucfirst($pizza[2]) }}</td>
+                    <td>{{ "£".number_format($pizza[3], 2) }}</td>
+                </tr>
+                    <?php $total += $pizza[3] ?>
             @endforeach
         </table>
 
@@ -79,6 +55,19 @@
             <tr>
                 <td>
                     <br>
+                    <div class="btn-group">
+                        <form method="post" action="{{ route('via') }}" >
+                            @csrf
+                            <input name="via" value="delivery" hidden>
+                            <input type="submit" value="Delivery" @if($_SESSION['via'] == 'delivery')style="background-color:lightgreen"@endif>
+                        </form>
+                        <form method="post" action="{{ route('via') }}">
+                            @csrf
+                            <input name="via" value="collection" hidden>
+                            <input type="submit" value="Collection" @if($_SESSION['via'] == 'collection')style="background-color:lightgreen"@endif>
+                        </form>
+                    </div>
+
                     {{-- Store order data in database --}}
                     <form method="post" action="{{ route('store') }}">
                         @csrf
@@ -86,16 +75,6 @@
                         {{-- Order Model data --}}
                         <input name="user_id" value="{{ $user->id }}" hidden>
                         <input name="total" value="{{ $total }}" hidden>
-                        <input type="radio" id="delivery" name="via" value="delivery" checked>
-                        <label for="delivery">Delivery</label>
-                        <input type="radio" id="collection" name="via" value="collection" >
-                        <label for="collection">Collection</label>
-                        <input name="deal" value="{{ $_SESSION['deal'] }}" hidden>
-
-                        {{-- OrderPizza Model data + with grouping of sizes --}}
-                        @foreach($order_with_quantities as $pizza_id => $quantity)
-                            <input name="all_pizzas[{{ $pizza_id }}]" value="{{ $quantity }}" hidden>
-                        @endforeach
 
                         <p>Deal: {{ $deal }}</p>
                         <p>Delivery to: {{ strtoupper($user->postcode) }}</p>

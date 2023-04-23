@@ -15,9 +15,11 @@ return new class extends Migration
     {
         Schema::create('pizzas', function (Blueprint $table) {
             $table->id();
-            $table->string('pizza_name');
-            $table->string('pizza_size');
-            $table->float('pizza_price', 5, 2);
+            $table->string('name');
+            $table->string('description');
+            $table->float('small', 5, 2);
+            $table->float('medium', 5, 2);
+            $table->float('large', 5, 2);
             $table->timestamps();
         });
     }

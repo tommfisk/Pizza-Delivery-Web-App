@@ -36,7 +36,11 @@ Route::post('/add_to_order', [App\Http\Controllers\OrderController::class, 'addT
 
 Auth::routes();
 
-Route::post('/check_deal', [App\Http\Controllers\OrderController::class, 'checkDeal'])->name('check_deal');
+Route::post('/via', [App\Http\Controllers\OrderController::class, 'via'])->name('via');
+
+Auth::routes();
+
+Route::post('/check_deal', [App\Http\Controllers\DealController::class, 'checkDeal'])->name('check_deal');
 
 Auth::routes();
 
