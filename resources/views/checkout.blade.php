@@ -1,10 +1,27 @@
 <?php
     session_start();
 
-    $pizza_groups['small'] = [];
-    $pizza_groups['medium'] = [];
-    $pizza_groups['large'] = [];
-    $total = 0.00
+    $total = 0.00;
+
+    if (!isset($_SESSION['deal'])) {
+        $_SESSION['deal'] = null;
+    }
+
+    if (!isset($_SESSION['via'])) {
+        $_SESSION['via'] = 'delivery';
+    }
+
+    if(!$_SESSION['deal'] == null) {
+        foreach($deals as $deal_model) {
+            if($deal_model->id == $_SESSION['deal']) {
+                $deal = $deal_model->deal_name;
+            }
+        }
+    }
+    else {
+        $deal = 'None';
+    }
+
 
 ?>
 @extends('layouts.app')
@@ -45,21 +62,6 @@
 
                         <?php $total += $pizza->pizza_price * $quantity; ?>
 
-
-                        {{-- Grouping each pizza id into a size category --}}
-                        @if($pizza->pizza_size == 'small')
-
-                                <?php $pizza_groups['small'][$pizza->id] = $quantity  ?>
-
-                        @elseif($pizza->pizza_size == 'medium')
-
-                                <?php $pizza_groups['medium'][$pizza->id] = $quantity ?>
-
-                        @else
-                                <?php $pizza_groups['large'][$pizza->id] = $quantity ?>
-
-                        @endif
-
                     @endif
                @endforeach
             @endforeach
@@ -88,37 +90,14 @@
                         <label for="delivery">Delivery</label>
                         <input type="radio" id="collection" name="via" value="collection" >
                         <label for="collection">Collection</label>
+                        <input name="deal" value="{{ $_SESSION['deal'] }}" hidden>
 
                         {{-- OrderPizza Model data + with grouping of sizes --}}
                         @foreach($order_with_quantities as $pizza_id => $quantity)
                             <input name="all_pizzas[{{ $pizza_id }}]" value="{{ $quantity }}" hidden>
                         @endforeach
 
-                        @foreach($pizza_groups['small'] as $pizza_id => $quantity)
-                            <input name="small_pizzas[{{ $pizza_id }}]" value="{{ $quantity }}" hidden>
-                        @endforeach
-                        @foreach($pizza_groups['medium'] as $pizza_id => $quantity)
-                            <input name="medium_pizzas[{{ $pizza_id }}]" value="{{ $quantity }}" hidden>
-                        @endforeach
-                        @foreach($pizza_groups['large'] as $pizza_id => $quantity)
-                            <input name="large_pizzas[{{ $pizza_id }}]" value="{{ $quantity }}" hidden>
-                        @endforeach
-
-                        {{-- Deal information --}}
-                        <p>Deals</p>
-                        <input type="checkbox" id="bogoff" name="deals[]" value="1">
-                        <label for="bogoff">BOGOFF</label><br>
-                        <input type="checkbox" id="three_for_two" name="deals[]" value="2">
-                        <label for="three_for_two">Three for Two</label><br>
-                        <input type="checkbox" id="family_feast" name="deals[]" value="3">
-                        <label for="family_feast">Family Feast</label><br>
-                        <input type="checkbox" id="two_large" name="deals[]" value="4">
-                        <label for="two_large">Two Large</label><br>
-                        <input type="checkbox" id="two_medium" name="deals[]" value="5">
-                        <label for="two_medium">Two Medium</label><br>
-                        <input type="checkbox" id="two_small" name="deals[]" value="6">
-                        <label for="two_small">Two Small</label><br>
-
+                        <p>Deal: {{ $deal }}</p>
                         <p>Delivery to: {{ strtoupper($user->postcode) }}</p>
                         <p>We'll call you at {{ $user->phone }} if anything goes wrong!</p>
                         <input type="submit" value="Order">

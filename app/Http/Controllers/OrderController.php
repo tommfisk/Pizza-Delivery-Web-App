@@ -4,19 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\OrderPizza;
-use App\Models\Pizza;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Custom\Deal;
 
 class OrderController extends Controller
 {
-    public function getOrder() {
-        $user = Auth::user();
-        $pizzas = Pizza::all();
-        return view('order', compact('user', 'pizzas'));
-    }
 
     public function addToOrder(Request $request) {
         session_start();
@@ -26,31 +19,45 @@ class OrderController extends Controller
         return redirect('home');
     }
 
-    public function store(Request $request) {
+    public function checkDeal(Request $request) {
+        session_start();
 
-        // Firstly, check deals
-//        foreach($request['deals'] as $deal) {
-//            switch ($deal) {
-//                case 1:
-//                    Deal::bogOf($request['medium_pizzas'], $request['large_pizzas']);
-//                    break;
-//                case 2:
-//                    Deal::threeForTwo();
-//                    break;
-//                case 3:
-//                    Deal::familyFeast();
-//                    break;
-//                case 4:
-//                    Deal::twoLarge();
-//                    break;
-//                case 5:
-//                    Deal::twoMedium();
-//                    break;
-//                case 6:
-//                    Deal::twoSmall();
-//                    break;
-//            }
-//        }
+        $_SESSION['order_nodeal'] = $_SESSION['order'];
+
+        $_SESSION['order_deal'] = [];
+        $_SESSION['order_deal']['small'] = [];
+        $_SESSION['order_deal']['medium'] = [];
+        $_SESSION['order_deal']['large'] = [];
+
+        switch($request['deal']) {
+            case 0:
+                $_SESSION['deal'] = null;
+                return redirect('deals');
+            case 1:
+                if (Deal::bogof()) {
+                    return $this->addDeal($request);
+                }
+                else {
+                    return redirect('deals');
+                }
+//            case 2:
+//                if(Deal::threeForTwo()) {
+//                    return $this->addDeal($request);
+//                }
+//                else {
+//                    return redirect('deals');
+//                }
+        }
+    }
+
+    private function addDeal(Request $request) {
+
+        $_SESSION['deal'] = $request['deal'];
+
+        return redirect('deals');
+    }
+
+    public function store(Request $request) {
 
         // Order table
         $order = new Order;
@@ -58,6 +65,7 @@ class OrderController extends Controller
         $order->user_id = $request['user_id'];
         $order->total = $request['total'];
         $order->via = $request['via'];
+        $order->deal_id = $request['deal'];
 
         $order->save();
 

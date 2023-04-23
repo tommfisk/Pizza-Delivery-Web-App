@@ -47,7 +47,7 @@ class DealSeeder extends Seeder
                     'updated_at' => date('Y-m-d H:i:s')
                 ],
                 [
-                    'deal_name' => 'Two Large',
+                    'deal_name' => 'Two Small',
                     'deal_description' => "Two small pizzas, priced at £12 - collection only",
                     'created_at' => date('Y-m-d H:i:s'),
                     'updated_at' => date('Y-m-d H:i:s')

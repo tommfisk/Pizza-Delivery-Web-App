@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(
             [
                 PizzaSeeder::class,
+                DealSeeder::class
             ]
         );
     }

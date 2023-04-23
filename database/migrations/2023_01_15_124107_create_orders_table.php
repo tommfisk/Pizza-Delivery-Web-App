@@ -18,10 +18,14 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->float('total');
             $table->string('via');
+            $table->unsignedBigInteger('deal_id')->nullable();
             $table->timestamps();
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users');
+            $table->foreign('deal_id')
+                ->references('id')
+                ->on('deals');
         });
     }
 

@@ -18,12 +18,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Auth::routes();
 
-
+Route::get('/home', [App\Http\Controllers\PagesController::class, 'index'])->name('home');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\Controller::class, 'index'])->name('home');
+Route::get('/deals', [App\Http\Controllers\PagesController::class, 'viewDeals'])->name('deals');
+
+Auth::routes();
+
+Route::get('/checkout', [App\Http\Controllers\PagesController::class, 'viewCheckout'])->name('checkout');
 
 Auth::routes();
 
@@ -31,7 +36,7 @@ Route::post('/add_to_order', [App\Http\Controllers\OrderController::class, 'addT
 
 Auth::routes();
 
-Route::get('/order', [App\Http\Controllers\OrderController::class, 'getOrder'])->name('get_order');
+Route::post('/check_deal', [App\Http\Controllers\OrderController::class, 'checkDeal'])->name('check_deal');
 
 Auth::routes();
 

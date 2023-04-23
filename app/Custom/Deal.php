@@ -2,41 +2,36 @@
 
 namespace App\Custom;
 
+use App\Models\Pizza;
+
 class Deal
 {
-    static function bogOf($medium_pizzas, $large_pizzas) : bool {
-        foreach($medium_pizzas as $pizza_id => $quantity) {
-            if(count($medium_pizzas) >= 2 || $quantity >= 2) {
-                return true;
-            }
-        }
+    static function bogof() : bool {
 
-        foreach($large_pizzas as $pizza_id => $quantity) {
-            if(count($large_pizzas) >= 2 || $quantity >= 2) {
-                return true;
-            }
-        }
+        $pizzas = Pizza::all();
 
         return false;
+
+
     }
 
-    static function threeForTwo($pizzas, $via) : bool {
+    static function threeForTwo($order, $via) : bool {
         return true;
     }
 
-    static function familyFeast($pizzas, $via) : bool {
+    static function familyFeast($order, $via) : bool {
         return true;
     }
 
-    static function twoLarge($pizzas, $via) : bool {
+    static function twoLarge($order, $via) : bool {
         return true;
     }
 
-    static function twoMedium($pizzas, $via) : bool {
+    static function twoMedium($order, $via) : bool {
         return true;
     }
 
-    static function twoSmall($pizzas, $via) : bool {
+    static function twoSmall($order, $via) : bool {
         return true;
     }
 }
