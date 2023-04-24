@@ -17,9 +17,15 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     <style>
+        td {
+            width: 50%;
+        }
+
         .flex-container {
             display: flex;
+            align-items: center;
             justify-content: center;
+            flex-direction: column;
         }
 
         .flex-container > div {
@@ -45,6 +51,9 @@
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('home') }}">Menu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('order_history') }}">Order History</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('deals') }}">Deals</a>

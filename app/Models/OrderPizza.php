@@ -14,6 +14,7 @@ class OrderPizza extends Model
     protected $fillable = [
         'order_id',
         'pizza_id',
-        'quantity'
+        'size',
+        'price'
     ];
 }

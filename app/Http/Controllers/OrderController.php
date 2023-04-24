@@ -44,7 +44,7 @@ class OrderController extends Controller
 
         $order->user_id = $request['user_id'];
         $order->total = $request['total'];
-        $order->via = $request['via'];
+        $order->via = $_SESSION['via'];
         $order->deal_id = $request['deal'];
 
         $order->save();
@@ -56,6 +56,7 @@ class OrderController extends Controller
             $order_pizza->order_id = $this->getNextOrderID();
             $order_pizza->pizza_id = $pizza[0];
             $order_pizza->size = $pizza[2];
+            $order_pizza->price = $pizza[3];
 
             $order_pizza->save();
         }

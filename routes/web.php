@@ -24,11 +24,23 @@ Route::get('/home', [App\Http\Controllers\PagesController::class, 'index'])->nam
 
 Auth::routes();
 
-Route::get('/deals', [App\Http\Controllers\PagesController::class, 'viewDeals'])->name('deals');
+Route::get('/order_history', [App\Http\Controllers\PagesController::class, 'orderHistory'])->name('order_history');
 
 Auth::routes();
 
-Route::get('/checkout', [App\Http\Controllers\PagesController::class, 'viewCheckout'])->name('checkout');
+Route::get('/deals', [App\Http\Controllers\PagesController::class, 'deals'])->name('deals');
+
+Auth::routes();
+
+Route::get('/checkout', [App\Http\Controllers\PagesController::class, 'checkout'])->name('checkout');
+
+Auth::routes();
+
+Route::get('/order_history_details', [App\Http\Controllers\PagesController::class, 'orderHistoryDetails'])->name('order_history_details');
+
+Auth::routes();
+
+Route::post('/details', [App\Http\Controllers\PagesController::class, 'details'])->name('details');
 
 Auth::routes();
 

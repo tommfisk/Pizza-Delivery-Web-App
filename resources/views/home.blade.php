@@ -1,3 +1,17 @@
+<?php
+if (!isset($_SESSION['order'])) {
+    $_SESSION['order'] = [];
+}
+
+if (!isset($_SESSION['deal'])) {
+    $_SESSION['deal'] = null;
+}
+
+if (!isset($_SESSION['via'])) {
+    $_SESSION['via'] = 'delivery';
+}
+?>
+
 @extends('layouts.app')
 
 @section('content')
@@ -24,6 +38,10 @@
                 </div>
             </div>
         </div>
+    @endforeach
+
+    @foreach($_SESSION['order'] as $pizza)
+        <p>{{ print_r($pizza) }}</p>
     @endforeach
 
 @endsection
