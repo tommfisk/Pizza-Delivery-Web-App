@@ -3,6 +3,11 @@
 @section('title', 'Secure page')
 
 @section('content')
+    @if($errors->any())
+        <div class="flex-container">
+            <h4 style="color:red">{{$errors->first()}}</h4>
+        </div>
+    @endif
 
     <div class="flex-container">
         <div @if($_SESSION['deal'] == null)style="background-color:lightgreen"@endif>

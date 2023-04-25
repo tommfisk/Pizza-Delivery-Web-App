@@ -29,6 +29,7 @@ class OrderController extends Controller
         foreach ($pizzas as $pizza) {
             if ($request['id'] == $pizza->id) {
                 $_SESSION['order'][] = [$pizza->id, $pizza->name, $pizza_size, $pizza->$pizza_size];
+                $_SESSION['pizzas_with_no_deal_applied'][] = [$pizza->id, $pizza->name, $pizza_size, $pizza->$pizza_size];
             }
         }
 
@@ -45,12 +46,36 @@ class OrderController extends Controller
         $order->user_id = $request['user_id'];
         $order->total = $request['total'];
         $order->via = $_SESSION['via'];
-        $order->deal_id = $request['deal'];
+        $order->deal_id = $_SESSION['deal'];
+        $order->deal_price = $_SESSION['deal_price'];
 
         $order->save();
 
-        // Order_pizza table, new row for each pizza ordered
-        foreach($_SESSION['order'] as $pizza) {
+        if ($_SESSION['deal'] == null) {
+            $this->orderPizzaStore($_SESSION['order']);
+        }
+        else {
+            $this->orderPizzaStore($_SESSION['pizzas_with_no_deal_applied']);
+
+            foreach($_SESSION['pizzas_with_deal_applied'] as $pizza) {
+                $order_pizza = new OrderPizza;
+
+                $order_pizza->order_id = $this->getNextOrderID();
+                $order_pizza->pizza_id = $pizza[0];
+                $order_pizza->size = $pizza[2];
+                $order_pizza->price = 0.00;
+
+                $order_pizza->save();
+            }
+        }
+
+        session_destroy();
+
+        return redirect('home');
+    }
+
+    private function orderPizzaStore($variable) {
+        foreach($variable as $pizza) {
             $order_pizza = new OrderPizza;
 
             $order_pizza->order_id = $this->getNextOrderID();
@@ -60,10 +85,6 @@ class OrderController extends Controller
 
             $order_pizza->save();
         }
-
-        session_destroy();
-
-        return redirect('home');
     }
 
     private function getNextOrderID()

@@ -1,10 +1,15 @@
 <?php
+//    session_destroy();
 if (!isset($_SESSION['order'])) {
     $_SESSION['order'] = [];
 }
 
 if (!isset($_SESSION['deal'])) {
     $_SESSION['deal'] = null;
+}
+
+if (!isset($_SESSION['deal_price'])) {
+    $_SESSION['deal_price'] = null;
 }
 
 if (!isset($_SESSION['via'])) {

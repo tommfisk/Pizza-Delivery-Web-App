@@ -11,17 +11,17 @@
                         <h2>Order ID: #{{ $order->id }}</h2>
                     </div>
                     <div class="card-body">
-                        <p>Total: {{ "£".number_format($order->total, 2) }}</p>
-                        <p>Via: {{ ucfirst($order->via)}}</p>
                         @if($order->deal_id == null)
                             <p>Deal: None</p>
                         @else
                             @foreach($deals as $deal)
                                 @if($deal->id == $order->deal_id)
-                                    <p>Deal: {{$deal->name}}</p>
+                                    <p>Deal: {{$deal->deal_name}}</p>
                                 @endif
                             @endforeach
                         @endif
+                        <p>Via: {{ ucfirst($order->via)}}</p>
+                        <p>Total: {{ "£".number_format($order->total, 2) }}</p>
                         <form method="POST" action="{{ route('details') }}">
                             @csrf
                             <input name="order_selected" value="{{ $order->id }}" hidden>

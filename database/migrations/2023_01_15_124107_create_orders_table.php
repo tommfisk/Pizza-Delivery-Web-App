@@ -19,6 +19,7 @@ return new class extends Migration
             $table->float('total');
             $table->string('via');
             $table->unsignedBigInteger('deal_id')->nullable();
+            $table->float('deal_price')->nullable();
             $table->timestamps();
             $table->foreign('user_id')
                 ->references('id')
