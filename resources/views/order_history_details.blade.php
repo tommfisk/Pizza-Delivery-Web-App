@@ -14,7 +14,7 @@
                     @if($_SESSION['order_selected'] == $order_pizza->order_id)
                         @foreach($pizzas as $pizza)
                             @if($pizza->id == $order_pizza->pizza_id)
-                                <tr>
+                                <tr @if($order_pizza->price == 0.00)style="color:red"@endif>
                                     <td>{{ $pizza->name }}</td>
                                     <td>{{ ucfirst($order_pizza->size) }}</td>
                                     <td>{{ "£".number_format($order_pizza->price, 2) }}</td>
