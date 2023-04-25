@@ -48,7 +48,7 @@ Route::post('/add_to_order', [App\Http\Controllers\OrderController::class, 'addT
 
 Auth::routes();
 
-Route::post('/via', [App\Http\Controllers\OrderController::class, 'via'])->name('via');
+Route::post('/via', [App\Http\Controllers\DealController::class, 'via'])->name('via');
 
 Auth::routes();
 

@@ -65,6 +65,12 @@
                 </table>
             </div>
 
+            @if($errors->any())
+                <div class="flex-container">
+                    <h4 style="color:red">{{$errors->first()}}</h4>
+                </div>
+            @endif
+
             {{-- Total/Form Table --}}
             <div class="card">
                 <div class="card-body">

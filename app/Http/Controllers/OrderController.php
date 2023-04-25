@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Custom\Deal;
 use App\Models\Order;
 use App\Models\OrderPizza;
 use App\Models\Pizza;
@@ -10,14 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-
-    public function via(Request $request) {
-        session_start();
-
-        $_SESSION['via'] = $request['via'];
-
-        return redirect('checkout');
-    }
 
     public function addToOrder(Request $request) {
         session_start();
