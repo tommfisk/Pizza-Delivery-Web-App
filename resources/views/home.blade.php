@@ -38,7 +38,7 @@ if (!isset($_SESSION['via'])) {
                             <option value="medium">Medium</option>
                             <option value="large">Large</option>
                         </select>
-                        <input type="submit" value="Add">
+                        <input class="btn btn-primary" type="submit" value="Add">
                     </form>
                 </div>
             </div>

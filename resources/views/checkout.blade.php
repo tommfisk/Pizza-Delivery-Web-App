@@ -22,7 +22,7 @@
 
     {{-- If the session array is not empty then display order information --}}
     @if(count($_SESSION['order']) != 0)
-        <h2 style="text-align: center">Current order:</h2>
+        <h1 style="text-align: center">Current Order</h1>
 
         {{-- Order Table --}}
         <div class="flex-container">
@@ -51,7 +51,7 @@
                             </tr>
                                 <?php $total += $pizza[3] ?>
                         @endforeach
-                        <p style="color:red">DEAL APPLIED</p>
+
                         @foreach($_SESSION['pizzas_with_deal_applied'] as $pizza)
                                 <tr style="color:red">
                                     <td>{{ $pizza[1] }}</td>
@@ -59,7 +59,10 @@
                                     <td>£0.00</td>
                                 </tr>
                         @endforeach
+
                                 <?php $total += $_SESSION['deal_price'] ?>
+
+                            <p style="color:red">DEAL APPLIED</p>
                         <p style="color:red">DEAL PRICE: {{ "£".number_format($_SESSION['deal_price'], 2) }}</p>
                     @endif
                 </table>
