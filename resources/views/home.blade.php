@@ -45,8 +45,4 @@ if (!isset($_SESSION['via'])) {
         </div>
     @endforeach
 
-    @foreach($_SESSION['order'] as $pizza)
-        <p>{{ print_r($pizza) }}</p>
-    @endforeach
-
 @endsection
